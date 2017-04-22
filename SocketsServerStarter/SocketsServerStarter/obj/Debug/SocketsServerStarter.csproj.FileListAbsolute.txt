@@ -1,0 +1,6 @@
+D:\TCPIPSocketProgrammingRedo\Code\SocketsServerStarter\SocketsServerStarter\bin\Debug\SocketsServerStarter.exe.config
+D:\TCPIPSocketProgrammingRedo\Code\SocketsServerStarter\SocketsServerStarter\bin\Debug\SocketsServerStarter.exe
+D:\TCPIPSocketProgrammingRedo\Code\SocketsServerStarter\SocketsServerStarter\bin\Debug\SocketsServerStarter.pdb
+D:\TCPIPSocketProgrammingRedo\Code\SocketsServerStarter\SocketsServerStarter\obj\Debug\SocketsServerStarter.csprojResolveAssemblyReference.cache
+D:\TCPIPSocketProgrammingRedo\Code\SocketsServerStarter\SocketsServerStarter\obj\Debug\SocketsServerStarter.exe
+D:\TCPIPSocketProgrammingRedo\Code\SocketsServerStarter\SocketsServerStarter\obj\Debug\SocketsServerStarter.pdb
