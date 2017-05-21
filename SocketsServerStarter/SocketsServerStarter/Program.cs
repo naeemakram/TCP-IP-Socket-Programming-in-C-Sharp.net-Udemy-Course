@@ -19,43 +19,49 @@ namespace SocketsServerStarter
 
             IPEndPoint ipep = new IPEndPoint(ipaddr, 23000);
 
-            listenerSocket.Bind(ipep);
-
-            listenerSocket.Listen(5);
-
-            Console.WriteLine("About to accept incoming connection.");
-
-            Socket client = listenerSocket.Accept();
-
-            Console.WriteLine("Client connected. " + client.ToString() + " - IP End Point: " + client.RemoteEndPoint.ToString());
-
-            byte[] buff = new byte[128];
-
-            int numberOfReceivedBytes = 0;
-
-            while (true)
+            try
             {
+                listenerSocket.Bind(ipep);
 
-                numberOfReceivedBytes = client.Receive(buff);
+                listenerSocket.Listen(5);
 
-                Console.WriteLine("Number of received bytes: " + numberOfReceivedBytes);
+                Console.WriteLine("About to accept incoming connection.");
 
-                Console.WriteLine("Data sent by client is: " + buff);
+                Socket client = listenerSocket.Accept();
 
-                string receivedText = Encoding.ASCII.GetString(buff, 0, numberOfReceivedBytes);
+                Console.WriteLine("Client connected. " + client.ToString() + " - IP End Point: " + client.RemoteEndPoint.ToString());
 
-                Console.WriteLine("Data sent by client is: " + receivedText);
+                byte[] buff = new byte[128];
 
-                client.Send(buff);
+                int numberOfReceivedBytes = 0;
 
-                if(receivedText == "x")
+                while (true)
                 {
-                    break;
+
+                    numberOfReceivedBytes = client.Receive(buff);
+
+                    Console.WriteLine("Number of received bytes: " + numberOfReceivedBytes);
+
+                    Console.WriteLine("Data sent by client is: " + buff);
+
+                    string receivedText = Encoding.ASCII.GetString(buff, 0, numberOfReceivedBytes);
+
+                    Console.WriteLine("Data sent by client is: " + receivedText);
+
+                    client.Send(buff);
+
+                    if (receivedText == "x")
+                    {
+                        break;
+                    }
+
+                    Array.Clear(buff, 0, buff.Length);
+                    numberOfReceivedBytes = 0;
                 }
-
-                Array.Clear(buff, 0, buff.Length);
-                numberOfReceivedBytes = 0;
-
+            }
+            catch(Exception excp)
+            {
+                Console.WriteLine(excp.ToString());
             }
             
         }
