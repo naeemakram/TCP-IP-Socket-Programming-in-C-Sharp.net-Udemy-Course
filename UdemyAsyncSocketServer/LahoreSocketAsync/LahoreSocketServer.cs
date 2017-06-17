@@ -71,6 +71,29 @@ namespace LahoreSocketAsync
             }
         }
 
+        public void StopServer()
+        {
+            try
+            {
+                if (mTCPListener != null)
+                {
+                    mTCPListener.Stop();
+                }
+
+                foreach(TcpClient c in mClients)
+                {
+                    c.Close();
+                }
+
+                mClients.Clear();
+            }
+            catch (Exception excp)
+            {
+
+                Debug.WriteLine(excp.ToString());
+            }
+        }
+
         private async void TakeCareOfTCPClient(TcpClient paramClient)
         {
             NetworkStream stream = null;
