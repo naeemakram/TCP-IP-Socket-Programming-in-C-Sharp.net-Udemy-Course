@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\UdemyAsyncSocketServer\LahoreSocketAsync\LahoreSocketAsync.csproj">
+      <Project>{d2adba01-689e-4dd5-9c1b-e92fb76ea226}</Project>
+      <Name>LahoreSocketAsync</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
