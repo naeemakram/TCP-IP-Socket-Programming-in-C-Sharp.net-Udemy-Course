@@ -74,6 +74,25 @@ namespace LahoreSocketAsync
             return true;
         }
 
+        public async Task SendToServer(string strInputUser)
+        {
+            if (string.IsNullOrEmpty(strInputUser))
+            {
+                Console.WriteLine("Empty string supplied to send.");
+                return;
+            }
+
+            if (mClient != null)
+            {
+                if (mClient.Connected)
+                {
+                    StreamWriter clientStreamWriter = new StreamWriter(mClient.GetStream());
+                    clientStreamWriter.AutoFlush = true;
+                }
+            }
+
+        }
+
         public async Task ConnectToServer()
         {
             if(mClient == null)
@@ -91,7 +110,7 @@ namespace LahoreSocketAsync
             }
             catch (Exception excp)
             {
-                Console.WriteLine(excp.ToString());
+                Console.WriteLine(excp.ToString());                
                 throw;
             }
         }
