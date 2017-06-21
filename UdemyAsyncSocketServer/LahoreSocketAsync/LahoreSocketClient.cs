@@ -88,6 +88,9 @@ namespace LahoreSocketAsync
                 {
                     StreamWriter clientStreamWriter = new StreamWriter(mClient.GetStream());
                     clientStreamWriter.AutoFlush = true;
+
+                    await clientStreamWriter.WriteAsync(strInputUser);
+                    Console.WriteLine("Data sent...");
                 }
             }
 

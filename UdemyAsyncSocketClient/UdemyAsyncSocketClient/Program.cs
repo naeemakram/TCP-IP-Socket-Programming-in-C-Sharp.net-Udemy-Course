@@ -39,12 +39,13 @@ namespace UdemyAsyncSocketClient
 
             do
             {
+                strInputUser = Console.ReadLine();
+
                 if (strInputUser.Trim() != "<EXIT>")
                 {
                     client.SendToServer(strInputUser);
                 }
-
-                strInputUser = Console.ReadLine();
+                
             } while (strInputUser != "<EXIT>");
 
 
