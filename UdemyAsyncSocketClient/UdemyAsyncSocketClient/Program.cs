@@ -45,6 +45,10 @@ namespace UdemyAsyncSocketClient
                 {
                     client.SendToServer(strInputUser);
                 }
+                else if(strInputUser.Equals("<EXIT>"))
+                {
+                    client.CloseAndDisconnect();
+                }
                 
             } while (strInputUser != "<EXIT>");
 

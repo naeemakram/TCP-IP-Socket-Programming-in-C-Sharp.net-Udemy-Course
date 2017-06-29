@@ -74,7 +74,18 @@ namespace LahoreSocketAsync
             return true;
         }
 
-        public async Task SendToServer(string strInputUser)
+        public void CloseAndDisconnect()
+        {
+            if (mClient != null)
+            {
+                if (mClient.Connected)
+                {
+                    mClient.Close();
+                }
+            }
+        }
+
+                public async Task SendToServer(string strInputUser)
         {
             if (string.IsNullOrEmpty(strInputUser))
             {
