@@ -18,11 +18,45 @@ namespace LahoreSocketAsync
 
         List<TcpClient> mClients;
 
+        public EventHandler<ClientConnectedEventArgs> RaiseClientConnectedEvent;
+        public EventHandler<TextReceivedEventArgs> RaiseTextReceivedEvent;
+        public EventHandler<ConnectionDisconnectedEventArgs> RaiseClientDisconnectedEvent;
+
         public bool KeepRunning { get; set; }
 
         public LahoreSocketServer()
         {
             mClients = new List<TcpClient>();
+        }
+
+        protected virtual void OnRaiseClientConnectedEvent(ClientConnectedEventArgs e)
+        {
+            EventHandler<ClientConnectedEventArgs> handler = RaiseClientConnectedEvent;
+
+            if(handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnRaiseTextReceivedEvent(TextReceivedEventArgs trea)
+        {
+            EventHandler<TextReceivedEventArgs> handler = RaiseTextReceivedEvent;
+
+            if (handler != null)
+            {
+                handler(this, trea);
+            }
+        }
+
+        protected virtual void OnRaiseClientDisconnectedEvent(ConnectionDisconnectedEventArgs cdea)
+        {
+            EventHandler<ConnectionDisconnectedEventArgs> handler = RaiseClientDisconnectedEvent;
+
+            if(handler != null)
+            {
+                handler(this, cdea);
+            }
         }
 
         public async void StartListeningForIncomingConnection(IPAddress ipaddr = null, int port = 23000)
@@ -62,6 +96,14 @@ namespace LahoreSocketAsync
                         );
 
                     TakeCareOfTCPClient(returnedByAccept);
+
+                    ClientConnectedEventArgs eaClientConnected;
+                    eaClientConnected = new ClientConnectedEventArgs(
+                        returnedByAccept.Client.RemoteEndPoint.ToString()
+                        );
+                    OnRaiseClientConnectedEvent(eaClientConnected);
+
+
                 }
 
             }
@@ -98,6 +140,7 @@ namespace LahoreSocketAsync
         {
             NetworkStream stream = null;
             StreamReader reader = null;
+            string clientEndPoint = paramClient.Client.RemoteEndPoint.ToString();
 
             try
             {
@@ -116,8 +159,10 @@ namespace LahoreSocketAsync
 
                     if (nRet == 0)
                     {
-                        RemoveClient(paramClient);
 
+                        OnRaiseClientDisconnectedEvent(
+                            new ConnectionDisconnectedEventArgs(clientEndPoint));
+                        RemoveClient(paramClient);
                         System.Diagnostics.Debug.WriteLine("Socket disconnected");
                         break;
                     }
@@ -125,6 +170,11 @@ namespace LahoreSocketAsync
                     string receivedText = new string(buff);
 
                     System.Diagnostics.Debug.WriteLine("*** RECEIVED: " + receivedText);
+
+                    OnRaiseTextReceivedEvent(new TextReceivedEventArgs(
+                        paramClient.Client.RemoteEndPoint.ToString(),
+                        receivedText
+                        ));
 
                     Array.Clear(buff, 0, buff.Length);
 
@@ -134,6 +184,8 @@ namespace LahoreSocketAsync
             }
             catch (Exception excp)
             {
+                OnRaiseClientDisconnectedEvent(
+                new ConnectionDisconnectedEventArgs(clientEndPoint));
                 RemoveClient(paramClient);
                 System.Diagnostics.Debug.WriteLine(excp.ToString());
             }
@@ -142,6 +194,7 @@ namespace LahoreSocketAsync
 
         private void RemoveClient(TcpClient paramClient)
         {
+            
             if(mClients.Contains(paramClient))
             {
                 mClients.Remove(paramClient);

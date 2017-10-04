@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnStopServer = new System.Windows.Forms.Button();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnAcceptIncomingAsync
@@ -82,11 +83,20 @@
             this.btnStopServer.UseVisualStyleBackColor = true;
             this.btnStopServer.Click += new System.EventHandler(this.btnStopServer_Click);
             // 
+            // txtConsole
+            // 
+            this.txtConsole.Location = new System.Drawing.Point(0, 30);
+            this.txtConsole.Multiline = true;
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.Size = new System.Drawing.Size(779, 291);
+            this.txtConsole.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(791, 431);
+            this.Controls.Add(this.txtConsole);
             this.Controls.Add(this.btnStopServer);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.label1);
@@ -107,6 +117,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Button btnStopServer;
+        private System.Windows.Forms.TextBox txtConsole;
     }
 }
 
