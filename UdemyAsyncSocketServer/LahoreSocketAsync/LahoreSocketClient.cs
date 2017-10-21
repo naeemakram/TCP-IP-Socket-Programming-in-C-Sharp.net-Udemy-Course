@@ -57,6 +57,29 @@ namespace LahoreSocketAsync
             return true;
         }
 
+        public static object ResolveHostNameToIPAddress(string strHostName)
+        {
+            IPAddress[] retAddr = null;
+
+            try
+            {
+                retAddr = Dns.GetHostAddresses(strHostName);
+
+                foreach(IPAddress addr in retAddr)
+                {
+                    if(addr.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return addr;
+                    }
+                }
+            }catch(Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+
+            return null;
+        }
+
         protected virtual void OnRaiseTextReceivedEvent(TextReceivedEventArgs trea)
         {
             EventHandler<TextReceivedEventArgs> handler = RaiseTextReceivedEvent;

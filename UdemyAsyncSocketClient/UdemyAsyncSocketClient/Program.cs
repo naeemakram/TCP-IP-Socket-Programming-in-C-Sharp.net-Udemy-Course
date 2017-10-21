@@ -22,7 +22,19 @@ namespace UdemyAsyncSocketClient
             string strIPAddress = Console.ReadLine();
 
             Console.WriteLine("Please Supply a Valid Port Number 0 - 65535 and Press Enter: ");
-            string strPortInput = Console.ReadLine();
+            string strPortInput = Console.ReadLine();           
+
+            if(strIPAddress.StartsWith("<HOST>"))
+            {
+                strIPAddress = strIPAddress.Replace("<HOST>", string.Empty);
+                strIPAddress = Convert.ToString(LahoreSocketClient.ResolveHostNameToIPAddress(strIPAddress));
+            }
+
+            if(string.IsNullOrEmpty(strIPAddress))
+            {
+                Console.WriteLine("No IP Address Supplied...");
+                Environment.Exit(0);
+            }
 
             if( !client.SetServerIPAddress(strIPAddress) || 
                     !client.SetPortNumber(strPortInput))
