@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyAsyncSocketClient", "UdemyAsyncSocketClient\UdemyAsyncSocketClient.csproj", "{D4B9B579-47C7-4AD4-A218-D0BBC571C045}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketClientGUI", "SocketClientGUI.csproj", "{FB744AA9-D7BB-4F3B-8855-EB7DAEFC7229}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LahoreSocketAsync", "..\UdemyAsyncSocketServer\LahoreSocketAsync\LahoreSocketAsync.csproj", "{D2ADBA01-689E-4DD5-9C1B-E92FB76EA226}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LahoreSocketAsync", "..\..\UdemyAsyncSocketServer\LahoreSocketAsync\LahoreSocketAsync.csproj", "{D2ADBA01-689E-4DD5-9C1B-E92FB76EA226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D4B9B579-47C7-4AD4-A218-D0BBC571C045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4B9B579-47C7-4AD4-A218-D0BBC571C045}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4B9B579-47C7-4AD4-A218-D0BBC571C045}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4B9B579-47C7-4AD4-A218-D0BBC571C045}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB744AA9-D7BB-4F3B-8855-EB7DAEFC7229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB744AA9-D7BB-4F3B-8855-EB7DAEFC7229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB744AA9-D7BB-4F3B-8855-EB7DAEFC7229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB744AA9-D7BB-4F3B-8855-EB7DAEFC7229}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2ADBA01-689E-4DD5-9C1B-E92FB76EA226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2ADBA01-689E-4DD5-9C1B-E92FB76EA226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2ADBA01-689E-4DD5-9C1B-E92FB76EA226}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {19C7C15D-670E-4EAB-BA61-7A08733404F2}
+		SolutionGuid = {07546E44-375E-44B1-B380-D6181276FA0B}
 	EndGlobalSection
 EndGlobal

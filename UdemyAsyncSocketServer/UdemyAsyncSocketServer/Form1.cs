@@ -32,7 +32,8 @@ namespace UdemyAsyncSocketServer
 
         private void btnSendAll_Click(object sender, EventArgs e)
         {
-            mServer.SendToAll(txtMessage.Text.Trim());
+            //mServer.SendToAll(txtMessage.Text.Trim());
+            mServer.SendLineToAll(txtMessage.Text.Trim());
         }
 
         private void btnStopServer_Click(object sender, EventArgs e)

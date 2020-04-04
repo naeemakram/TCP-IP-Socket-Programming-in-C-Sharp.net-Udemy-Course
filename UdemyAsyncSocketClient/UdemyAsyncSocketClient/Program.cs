@@ -17,7 +17,7 @@ namespace UdemyAsyncSocketClient
             client.RaiseServerConnected += HandleServerConnected;
 
             Console.WriteLine("*** Welcome to Socket Client Starter Example by Naeem Akram Malik ***");
-            Console.WriteLine("Please Type a Valid Server IP Address and Press Enter: ");
+            Console.WriteLine("Please Type a Valid Server IP Address or hostname formatted as <HOST> and Press Enter: ");
 
             string strIPAddress = Console.ReadLine();
 

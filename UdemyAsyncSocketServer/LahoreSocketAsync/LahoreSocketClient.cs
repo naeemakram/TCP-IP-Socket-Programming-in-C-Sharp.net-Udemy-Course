@@ -42,6 +42,8 @@ namespace LahoreSocketAsync
             }
         }
 
+        public bool IsConnected { get { return mClient.Connected; } }
+
         public bool SetServerIPAddress(string _IPAddressServer)
         {
             IPAddress ipaddr = null;
@@ -57,7 +59,7 @@ namespace LahoreSocketAsync
             return true;
         }
 
-        public static object ResolveHostNameToIPAddress(string strHostName)
+        public static IPAddress ResolveHostNameToIPAddress(string strHostName)
         {
             IPAddress[] retAddr = null;
 
@@ -155,7 +157,8 @@ namespace LahoreSocketAsync
                     StreamWriter clientStreamWriter = new StreamWriter(mClient.GetStream());
                     clientStreamWriter.AutoFlush = true;
 
-                    await clientStreamWriter.WriteAsync(strInputUser);
+                    //await clientStreamWriter.WriteAsync(strInputUser);
+                    await clientStreamWriter.WriteLineAsync(strInputUser);
                     Console.WriteLine("Data sent...");
                 }
             }
@@ -176,11 +179,11 @@ namespace LahoreSocketAsync
                     mServerIPAddress, mServerPort));
 
                 RaiseServerConnected(this, new ConnectionDisconnectedEventArgs(
-                    mClient.Client.RemoteEndPoint.ToString())
+                    Convert.ToString(mClient.Client.RemoteEndPoint))
                     );
 
 
-                ReadDataAsync(mClient);
+                ReadLineAsync(mClient);
             }
             catch (Exception excp)
             {
@@ -204,7 +207,7 @@ namespace LahoreSocketAsync
                     if (readByteCount <= 0)
                     {
                         Console.WriteLine("Disconnected from server.");
-                        OnRaisePeerDisconnectedEvent(new ConnectionDisconnectedEventArgs(mClient.Client.RemoteEndPoint.ToString()));
+                        OnRaisePeerDisconnectedEvent(new ConnectionDisconnectedEventArgs(Convert.ToString(mClient.Client.RemoteEndPoint)));
                         mClient.Close();
                         break;
                     }
@@ -213,11 +216,49 @@ namespace LahoreSocketAsync
 
                     OnRaiseTextReceivedEvent(
                     new TextReceivedEventArgs(
-                    mClient.Client.RemoteEndPoint.ToString(),
+                    Convert.ToString( mClient.Client.RemoteEndPoint),
                     new string(buff)));
 
 
                     Array.Clear(buff, 0, buff.Length);
+                }
+            }
+            catch (Exception excp)
+            {
+                Console.WriteLine(excp.ToString());
+                throw;
+            }
+        }
+
+
+        private async Task ReadLineAsync(TcpClient mClient)
+        {
+            try
+            {
+                StreamReader clientStreamReader = new StreamReader(mClient.GetStream());
+                string receivedLine = string.Empty;
+
+                while (true)
+                {
+                    receivedLine = await clientStreamReader.ReadLineAsync();
+
+                    if (receivedLine.Length <= 0)
+                    {
+                        Console.WriteLine("Disconnected from server.");
+                        OnRaisePeerDisconnectedEvent(new ConnectionDisconnectedEventArgs(Convert.ToString( mClient.Client.RemoteEndPoint)));
+                        mClient.Close();
+                        break;
+                    }
+
+                    Console.WriteLine(string.Format("Received bytes: {0} - Message: {1}",
+                        receivedLine.Length, receivedLine));
+
+                    OnRaiseTextReceivedEvent(
+                    new TextReceivedEventArgs(
+                   Convert.ToString(mClient.Client.RemoteEndPoint),
+                   receivedLine));
+
+                   receivedLine = string.Empty;
                 }
             }
             catch (Exception excp)

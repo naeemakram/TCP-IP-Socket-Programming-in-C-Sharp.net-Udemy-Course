@@ -148,16 +148,17 @@ namespace LahoreSocketAsync
                 reader = new StreamReader(stream);
 
                 char[] buff = new char[64];
+                string line = string.Empty;
 
                 while (KeepRunning)
                 {
                     Debug.WriteLine("*** Ready to read");
 
-                    int nRet = await reader.ReadAsync(buff, 0, buff.Length);
+                    line = await reader.ReadLineAsync();
 
-                    System.Diagnostics.Debug.WriteLine("Returned: " + nRet);
+                    System.Diagnostics.Debug.WriteLine("Returned: " + line.Length);
 
-                    if (nRet == 0)
+                    if (line.Length == 0)
                     {
 
                         OnRaiseClientDisconnectedEvent(
@@ -167,13 +168,13 @@ namespace LahoreSocketAsync
                         break;
                     }
 
-                    string receivedText = new string(buff);
+                    
 
-                    System.Diagnostics.Debug.WriteLine("*** RECEIVED: " + receivedText);
+                    System.Diagnostics.Debug.WriteLine("*** RECEIVED: " + line);
 
                     OnRaiseTextReceivedEvent(new TextReceivedEventArgs(
                         paramClient.Client.RemoteEndPoint.ToString(),
-                        receivedText
+                        line
                         ));
 
                     Array.Clear(buff, 0, buff.Length);
@@ -216,6 +217,31 @@ namespace LahoreSocketAsync
                 foreach(TcpClient c in mClients)
                 {
                     c.GetStream().WriteAsync(buffMessage, 0, buffMessage.Length);
+                }
+            }
+            catch (Exception excp)
+            {
+                Debug.WriteLine(excp.ToString());
+            }
+
+        }
+
+        public async void SendLineToAll(string leMessage)
+        {
+            if (string.IsNullOrEmpty(leMessage))
+            {
+                return;
+            }
+
+            StreamWriter clientStreamWriter = null;
+
+            try
+            {
+                foreach (TcpClient c in mClients)
+                {
+                    clientStreamWriter = new StreamWriter(c.GetStream());
+                    clientStreamWriter.AutoFlush = true;
+                    await clientStreamWriter.WriteLineAsync(leMessage);
                 }
             }
             catch (Exception excp)
