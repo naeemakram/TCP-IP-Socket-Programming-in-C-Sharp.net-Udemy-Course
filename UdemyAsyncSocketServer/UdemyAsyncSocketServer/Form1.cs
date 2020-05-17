@@ -12,6 +12,8 @@ using System.IO;
 
 namespace UdemyAsyncSocketServer
 {
+    //relevant course materials can be found here
+    //https://www.udemy.com/course/tcpip-socket-programming-for-coders-using-csharp-net/?couponCode=CURRENTBESTMAY2020
     public partial class Form1 : Form
     {
         LahoreSocketServer mServer;
@@ -28,6 +30,8 @@ namespace UdemyAsyncSocketServer
         private void btnAcceptIncomingAsync_Click(object sender, EventArgs e)
         {
             mServer.StartListeningForIncomingConnection();
+            txtConsole.AppendText(string.Format("{0} - Listening for incoming connections {1}",
+             DateTime.Now, Environment.NewLine));
         }
 
         private void btnSendAll_Click(object sender, EventArgs e)
